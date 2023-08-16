@@ -26,7 +26,7 @@ type FormTextProps = {
   name: string
   label: string
   required?: boolean
-  type?: 'email' | 'password' | 'phone'
+  type?: 'email' | 'password' | 'phone' | 'number'
   hidePasswordStrength?: boolean
   multiline?: boolean
   inputProps?: TextFieldProps
