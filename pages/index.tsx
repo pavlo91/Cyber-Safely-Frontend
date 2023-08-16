@@ -1,5 +1,6 @@
 import { Box, Button, Container, Divider, List, ListItem, Stack, Typography } from '@mui/material'
 import NextImage from 'next/image'
+import NextLink from 'next/link'
 import { z } from 'zod'
 import { Form } from '../components/common/form/Form'
 import { FormSelect } from '../components/common/form/FormSelect'
@@ -36,9 +37,11 @@ function Hero() {
             <Typography variant="h5" fontWeight="bold">
               A tool to help schools increase student safety
             </Typography>
-            <Button sx={{ py: 2 }} size="large" href="https://forms.office.com/r/ggKZYL0acy" target="_blank">
-              Join our pilot program!
-            </Button>
+            <NextLink href="/request-account">
+              <Button sx={{ py: 2 }} size="large">
+                Get involved
+              </Button>
+            </NextLink>
           </Stack>
         </Container>
       </Box>

@@ -58,6 +58,7 @@ declare module "nextjs-routes" {
     | DynamicRoute<"/invite/[token]", { "token": string }>
     | StaticRoute<"/parental-consent">
     | StaticRoute<"/privacy-policy">
+    | StaticRoute<"/request-account">
     | StaticRoute<"/resources">
     | StaticRoute<"/terms">
     | StaticRoute<"/why">;
