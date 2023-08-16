@@ -128,6 +128,10 @@ export default function Login() {
         <NextLink href="/auth/reset">
           <Link textAlign="right">Forgot password?</Link>
         </NextLink>
+
+        <NextLink href="/request-account">
+          <Link textAlign="right">Create an account for your school</Link>
+        </NextLink>
         <RegisterButton />
       </Stack>
     </CoverLayout>
