@@ -9,6 +9,7 @@ import { Form } from '../components/common/form/Form'
 import { FormCheckbox } from '../components/common/form/FormCheckbox'
 import { FormSelect } from '../components/common/form/FormSelect'
 import { FormText } from '../components/common/form/FormText'
+import { useRequestAccountMutation } from '../schema'
 
 const schemaStep1 = z.object({
   get_more_info: z.boolean(),
@@ -20,6 +21,16 @@ const schemaStep1 = z.object({
   otherRole: z.boolean(),
 })
 
+const CHECKBOX_LABELS = {
+  get_more_info: 'Get more information',
+  create_account_for_school: 'Create an account for your school',
+  schedule_demo: 'Schedule a demo',
+
+  schoolRole: 'A school administrator, teacher, athletic director or coach',
+  parentRole: 'Parent',
+  otherRole: 'Other (i.e. affiliated with a youth organization)',
+}
+
 const RequestStep1 = (props: { onNext: (data: z.infer<typeof schemaStep1>) => void }) => {
   return (
     <Form schema={schemaStep1} onSubmit={(data) => props.onNext(data)} submit="Next">
@@ -28,17 +39,17 @@ const RequestStep1 = (props: { onNext: (data: z.infer<typeof schemaStep1>) => vo
       <FormGroup>
         <FormLabel>Please check approxiate box:</FormLabel>
 
-        <FormCheckbox name="get_more_info" label={'Get more information'} />
-        <FormCheckbox name="create_account_for_school" label={'Create an account for your school'} />
-        <FormCheckbox name="schedule_demo" label={'Schedule a demo'} />
+        <FormCheckbox name="get_more_info" label={CHECKBOX_LABELS['get_more_info']} />
+        <FormCheckbox name="create_account_for_school" label={CHECKBOX_LABELS['create_account_for_school']} />
+        <FormCheckbox name="schedule_demo" label={CHECKBOX_LABELS['schedule_demo']} />
       </FormGroup>
 
       <FormGroup>
         <FormLabel>Are you:</FormLabel>
 
-        <FormCheckbox name="schoolRole" label={'A school administrator, teacher, athletic director or coach'} />
-        <FormCheckbox name="parentRole" label={'Parent'} />
-        <FormCheckbox name="otherRole" label={'Other (i.e. affiliated with a youth organization)'} />
+        <FormCheckbox name="schoolRole" label={CHECKBOX_LABELS['schoolRole']} />
+        <FormCheckbox name="parentRole" label={CHECKBOX_LABELS['parentRole']} />
+        <FormCheckbox name="otherRole" label={CHECKBOX_LABELS['otherRole']} />
       </FormGroup>
     </Form>
   )
@@ -98,8 +109,9 @@ const RequestStep4 = (props: { data: Schema }) => {
   const router = useRouter()
 
   const [loading, setLoading] = useState(false)
-
   const [comments, setComments] = useState('')
+
+  const [requestAccount] = useRequestAccountMutation()
 
   return (
     <Stack>
@@ -126,9 +138,44 @@ const RequestStep4 = (props: { data: Schema }) => {
           try {
             setLoading(true)
 
-            console.error(props.data)
+            const reasonArray = [];
+            const roleArray = [];
 
-            return
+            if( props.data.step1.get_more_info )
+              reasonArray.push(CHECKBOX_LABELS['get_more_info'])
+            if( props.data.step1.create_account_for_school )
+              reasonArray.push(CHECKBOX_LABELS['create_account_for_school'])
+            if( props.data.step1.schedule_demo )
+              reasonArray.push(CHECKBOX_LABELS['schedule_demo'])
+
+            if( props.data.step1.schoolRole )
+              roleArray.push(CHECKBOX_LABELS['schoolRole'])
+            if( props.data.step1.parentRole )
+              roleArray.push(CHECKBOX_LABELS['parentRole'])
+            if( props.data.step1.otherRole )
+              roleArray.push(CHECKBOX_LABELS['otherRole'])
+
+            const result = await requestAccount({
+              variables: {
+                input: {
+                  reason: reasonArray,
+                  role: roleArray,
+                  firstName: props.data.step2.firstName,
+                  lastName: props.data.step2.lastName,
+                  jobTitle: props.data.step2.jobTitle,
+                  email: props.data.step2.email,
+                  phone: props.data.step2.phone,
+                  schoolName: props.data.step2.schoolName,
+                  state: props.data.step2.state,
+                  students: parseInt( props.data.step3.students ),
+                  schoolType: props.data.step3.schoolType,
+                  comments: comments,
+                },
+              },
+            })
+
+            console.error('result for request Account ----------', result);
+            return;
 
             router.push('/dashboard')
           } finally {
