@@ -541,3 +541,7 @@ mutation respondToInvitedRole($token: String!, $accept: Boolean!, $name: String,
 mutation simulateNewFlaggedPost($input: SimulateNewFlaggedPostInput!) {
   simulateNewFlaggedPost(input: $input)
 }
+
+mutation requestAccount($input: RequestAccountInput!) {
+  requestAccount(input: $input)
+}

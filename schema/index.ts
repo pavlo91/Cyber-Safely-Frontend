@@ -1,5 +1,5 @@
-import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
+import { gql } from '@apollo/client';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -188,6 +188,7 @@ export type Mutation = {
   updateUser: User;
   updateUserParentalApproval: Scalars['Boolean'];
   validatePhoneNumber: Scalars['Boolean'];
+  requestAccount: Scalars['Boolean'];
 };
 
 
@@ -346,6 +347,10 @@ export type MutationUpdateUserParentalApprovalArgs = {
 export type MutationValidatePhoneNumberArgs = {
   token: Scalars['String'];
 };
+
+export type MutationRequestAccountArgs = {
+  input: RequestAccountInput;
+}
 
 export type Notification = {
   __typename?: 'Notification';
@@ -714,6 +719,21 @@ export type UpdateUserInput = {
   name?: InputMaybe<Scalars['String']>;
   newEmail?: InputMaybe<Scalars['String']>;
   newPhoneNumber?: InputMaybe<Scalars['String']>;
+};
+
+export type RequestAccountInput = {
+  reason: Array<string>;
+  role: Array<string>;
+  firstName: InputMaybe<Scalars['String']>,
+  lastName: InputMaybe<Scalars['String']>,
+  jobTitle?: InputMaybe<Scalars['String']>,
+  email: InputMaybe<Scalars['String']>,
+  phone?: InputMaybe<Scalars['String']>,
+  schoolName: InputMaybe<Scalars['String']>,
+  state: InputMaybe<Scalars['String']>,
+  students: InputMaybe<Scalars['Int']>,
+  schoolType: InputMaybe<Scalars['String']>,
+  comments?: InputMaybe<Scalars['String']>,
 };
 
 export type Upload = {
@@ -1134,6 +1154,13 @@ export type RespondToInvitedRoleMutation = { __typename?: 'Mutation', respondToI
 export type SimulateNewFlaggedPostMutationVariables = Exact<{
   input: SimulateNewFlaggedPostInput;
 }>;
+
+export type RequestAccountMutationVariables = Exact<{
+  input: RequestAccountInput;
+}>;
+
+
+export type RequestAccountMutation = { __typename?: 'Mutation', requestAccount: boolean };
 
 
 export type SimulateNewFlaggedPostMutation = { __typename?: 'Mutation', simulateNewFlaggedPost: boolean };
@@ -2930,6 +2957,39 @@ export function useRespondToInvitedRoleMutation(baseOptions?: Apollo.MutationHoo
 export type RespondToInvitedRoleMutationHookResult = ReturnType<typeof useRespondToInvitedRoleMutation>;
 export type RespondToInvitedRoleMutationResult = Apollo.MutationResult<RespondToInvitedRoleMutation>;
 export type RespondToInvitedRoleMutationOptions = Apollo.BaseMutationOptions<RespondToInvitedRoleMutation, RespondToInvitedRoleMutationVariables>;
+
+export const RequestAccountDocument = gql`
+    mutation RequestAccount($input: RequestAccountInput!) {
+  requestAccount(input: $input)
+}
+    `;
+export type RequestAccountMutationFn = Apollo.MutationFunction<RequestAccountMutation, RequestAccountMutationVariables>;
+
+/**
+ * __useRequestAccountMutation__
+ *
+ * To run a mutation, you first call `useRequestAccountMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRequestAccountMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [requestAccountMutation, { data, loading, error }] = useRequestAccountMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useRequestAccountMutation(baseOptions?: Apollo.MutationHookOptions<RequestAccountMutation, RequestAccountMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<RequestAccountMutation, RequestAccountMutationVariables>(RequestAccountDocument, options);
+      }
+export type RequestAccountMutationHookResult = ReturnType<typeof useRequestAccountMutation>;
+export type RequestAccountMutationResult = Apollo.MutationResult<RequestAccountMutation>;
+export type RequestAccountMutationOptions = Apollo.BaseMutationOptions<RequestAccountMutation, RequestAccountMutationVariables>;
+
 export const SimulateNewFlaggedPostDocument = gql`
     mutation simulateNewFlaggedPost($input: SimulateNewFlaggedPostInput!) {
   simulateNewFlaggedPost(input: $input)
