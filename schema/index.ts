@@ -1,26 +1,28 @@
-import * as Apollo from '@apollo/client';
 import { gql } from '@apollo/client';
+import * as Apollo from '@apollo/client';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: string;
-  String: string;
-  Boolean: boolean;
-  Int: number;
-  Float: number;
-  DateTime: string;
+  ID: { input: string; output: string; }
+  String: { input: string; output: string; }
+  Boolean: { input: boolean; output: boolean; }
+  Int: { input: number; output: number; }
+  Float: { input: number; output: number; }
+  DateTime: { input: string; output: string; }
 };
 
 export type Action = {
   __typename?: 'Action';
-  createdAt: Scalars['DateTime'];
-  id: Scalars['ID'];
-  name: Scalars['String'];
+  createdAt: Scalars['DateTime']['output'];
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
   user?: Maybe<User>;
 };
 
@@ -34,12 +36,12 @@ export const ActionEnum = {
 export type ActionEnum = typeof ActionEnum[keyof typeof ActionEnum];
 export type Address = {
   __typename?: 'Address';
-  city: Scalars['String'];
-  formatted: Scalars['String'];
-  id: Scalars['ID'];
-  state: Scalars['String'];
-  street: Scalars['String'];
-  zip: Scalars['String'];
+  city: Scalars['String']['output'];
+  formatted: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  state: Scalars['String']['output'];
+  street: Scalars['String']['output'];
+  zip: Scalars['String']['output'];
 };
 
 export const AnalysisItemSeverityEnum = {
@@ -51,102 +53,134 @@ export const AnalysisItemSeverityEnum = {
 export type AnalysisItemSeverityEnum = typeof AnalysisItemSeverityEnum[keyof typeof AnalysisItemSeverityEnum];
 export type AnyUserRole = {
   __typename?: 'AnyUserRole';
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
   status: UserRoleStatusEnum;
   type: UserRoleTypeEnum;
 };
 
+export type Category = {
+  __typename?: 'Category';
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+};
+
+export type Room = {
+  __typename?: 'Room';
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  capacity: Scalars['Int']['output'];
+  createdAt: Scalars['DateTime']['output'];
+};
+
 export type ContactInput = {
-  comments?: InputMaybe<Scalars['String']>;
-  describe: Scalars['String'];
-  email: Scalars['String'];
-  firstName: Scalars['String'];
-  jobTitle?: InputMaybe<Scalars['String']>;
-  lastName: Scalars['String'];
-  phone?: InputMaybe<Scalars['String']>;
-  schoolName: Scalars['String'];
-  state: Scalars['String'];
-  students: Scalars['String'];
+  comments?: InputMaybe<Scalars['String']['input']>;
+  describe: Scalars['String']['input'];
+  email: Scalars['String']['input'];
+  firstName: Scalars['String']['input'];
+  jobTitle?: InputMaybe<Scalars['String']['input']>;
+  lastName: Scalars['String']['input'];
+  phone?: InputMaybe<Scalars['String']['input']>;
+  schoolName: Scalars['String']['input'];
+  state: Scalars['String']['input'];
+  students: Scalars['String']['input'];
 };
 
 export type CreateAddressInput = {
-  city: Scalars['String'];
-  state: Scalars['String'];
-  street: Scalars['String'];
-  zip: Scalars['String'];
+  city: Scalars['String']['input'];
+  state: Scalars['String']['input'];
+  street: Scalars['String']['input'];
+  zip: Scalars['String']['input'];
+};
+
+export type CreateCategoryInput = {
+  name: Scalars['String']['input'];
+};
+
+export type CreateRoomInput = {
+  name: Scalars['String']['input'];
+  capacity: Scalars['Int']['input'];
+};
+
+export type CreateResourceInput = {
+  category: Scalars['String']['input'];
+  subTitle: Scalars['String']['input'];
+  title: Scalars['String']['input'];
+  uploadId?: InputMaybe<Scalars['String']['input']>;
+  uploadType: Scalars['String']['input'];
+  url: Scalars['String']['input'];
 };
 
 export type CreateSchoolInput = {
-  name: Scalars['String'];
-  phone?: InputMaybe<Scalars['String']>;
-  userId?: InputMaybe<Scalars['ID']>;
+  name: Scalars['String']['input'];
+  phone?: InputMaybe<Scalars['String']['input']>;
+  userId?: InputMaybe<Scalars['ID']['input']>;
 };
 
 export type CreateUserRoleInput = {
-  email: Scalars['String'];
-  relationId?: InputMaybe<Scalars['ID']>;
+  email: Scalars['String']['input'];
+  relationId?: InputMaybe<Scalars['ID']['input']>;
   type: UserRoleTypeEnum;
 };
 
 export type Facebook = {
   __typename?: 'Facebook';
-  id: Scalars['ID'];
-  username: Scalars['String'];
+  id: Scalars['ID']['output'];
+  username: Scalars['String']['output'];
 };
 
 export type Flag = {
   __typename?: 'Flag';
-  reasons: Array<Scalars['String']>;
+  reasons: Array<Scalars['String']['output']>;
   severity: AnalysisItemSeverityEnum;
 };
 
 export type Header = {
   __typename?: 'Header';
-  key: Scalars['String'];
-  value: Scalars['String'];
+  key: Scalars['String']['output'];
+  value: Scalars['String']['output'];
 };
 
 export type Image = {
   __typename?: 'Image';
-  id: Scalars['ID'];
-  url: Scalars['String'];
+  id: Scalars['ID']['output'];
+  url: Scalars['String']['output'];
 };
 
 export type ImportStudentsAndParentsHeader = {
-  parentEmail: Scalars['String'];
-  studentEmail: Scalars['String'];
+  parentEmail: Scalars['String']['input'];
+  studentEmail: Scalars['String']['input'];
 };
 
 export type ImportStudentsAndParentsInput = {
   header: ImportStudentsAndParentsHeader;
   type: PreviewImportTypeEnum;
-  uploadId: Scalars['ID'];
+  uploadId: Scalars['ID']['input'];
 };
 
 export type Instagram = {
   __typename?: 'Instagram';
-  id: Scalars['ID'];
-  username: Scalars['String'];
+  id: Scalars['ID']['output'];
+  username: Scalars['String']['output'];
 };
 
 export type InvitedRole = {
   __typename?: 'InvitedRole';
-  isNewUser: Scalars['Boolean'];
-  schoolLogoURL?: Maybe<Scalars['String']>;
-  schoolName?: Maybe<Scalars['String']>;
+  isNewUser: Scalars['Boolean']['output'];
+  schoolLogoURL?: Maybe<Scalars['String']['output']>;
+  schoolName?: Maybe<Scalars['String']['output']>;
   type: UserRoleTypeEnum;
 };
 
 export type LoginWithEmailInput = {
-  email: Scalars['String'];
-  password: Scalars['String'];
+  email: Scalars['String']['input'];
+  password: Scalars['String']['input'];
 };
 
 export type Media = {
   __typename?: 'Media';
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
   type: MediaTypeEnum;
-  url: Scalars['String'];
+  url: Scalars['String']['output'];
 };
 
 export const MediaTypeEnum = {
@@ -157,38 +191,44 @@ export const MediaTypeEnum = {
 export type MediaTypeEnum = typeof MediaTypeEnum[keyof typeof MediaTypeEnum];
 export type Mutation = {
   __typename?: 'Mutation';
-  authWithSocial: Scalars['String'];
-  contact: Scalars['Boolean'];
+  authWithSocial: Scalars['String']['output'];
+  contact: Scalars['Boolean']['output'];
   createAddress: Address;
+  createCategory: Category;
+  createRoom: Room;
+  createDevice: Scalars['Boolean']['output'];
+  createResource: Resource;
   createSchool: School;
   createUserRole: User;
-  executeAction: Scalars['Boolean'];
-  forgotPassword: Scalars['Boolean'];
-  importStudentsAndParents: Scalars['Boolean'];
+  executeAction: Scalars['Boolean']['output'];
+  forgotPassword: Scalars['Boolean']['output'];
+  importStudentsAndParents: Scalars['Boolean']['output'];
   loginWithEmail: UserWithToken;
   prepareUpload: Upload;
   previewImport: PreviewImport;
-  readNotifications: Scalars['Boolean'];
+  readNotifications: Scalars['Boolean']['output'];
   registerWithEmail: UserWithToken;
-  removeAddress: Scalars['Boolean'];
-  removeImage: Scalars['Boolean'];
-  removeSocial: Scalars['Boolean'];
-  removeUserRole: Scalars['Boolean'];
-  resendUserRoleInvite: Scalars['Boolean'];
+  removeAddress: Scalars['Boolean']['output'];
+  removeCategory: Scalars['Boolean']['output'];
+  removeImage: Scalars['Boolean']['output'];
+  removeSocial: Scalars['Boolean']['output'];
+  removeUserRole: Scalars['Boolean']['output'];
+  requestAccount: Scalars['Boolean']['output'];
+  resendUserRoleInvite: Scalars['Boolean']['output'];
   resetPassword: UserWithToken;
   respondToInvitedRole: UserWithToken;
-  simulateNewFlaggedPost: Scalars['Boolean'];
+  simulateNewFlaggedPost: Scalars['Boolean']['output'];
   updateAddress: Address;
-  updateEmailSettings: Scalars['Boolean'];
+  updateCategory: Category;
+  updateEmailSettings: Scalars['Boolean']['output'];
   updateImage: Image;
-  updatePassword: Scalars['Boolean'];
+  updatePassword: Scalars['Boolean']['output'];
   updateSchool: School;
-  updateSettings: Scalars['Boolean'];
-  updateShareDataWithSchool: Scalars['Boolean'];
+  updateSettings: Scalars['Boolean']['output'];
+  updateShareDataWithSchool: Scalars['Boolean']['output'];
   updateUser: User;
-  updateUserParentalApproval: Scalars['Boolean'];
-  validatePhoneNumber: Scalars['Boolean'];
-  requestAccount: Scalars['Boolean'];
+  updateUserParentalApproval: Scalars['Boolean']['output'];
+  validatePhoneNumber: Scalars['Boolean']['output'];
 };
 
 
@@ -204,7 +244,22 @@ export type MutationContactArgs = {
 
 export type MutationCreateAddressArgs = {
   input: CreateAddressInput;
-  schoolId: Scalars['ID'];
+  schoolId: Scalars['ID']['input'];
+};
+
+
+export type MutationCreateCategoryArgs = {
+  input: CreateCategoryInput;
+};
+
+
+export type MutationCreateDeviceArgs = {
+  token: Scalars['String']['input'];
+};
+
+
+export type MutationCreateResourceArgs = {
+  input: CreateResourceInput;
 };
 
 
@@ -219,19 +274,19 @@ export type MutationCreateUserRoleArgs = {
 
 
 export type MutationExecuteActionArgs = {
-  postId: Scalars['ID'];
+  postId: Scalars['ID']['input'];
   type: ActionEnum;
 };
 
 
 export type MutationForgotPasswordArgs = {
-  email: Scalars['String'];
+  email: Scalars['String']['input'];
 };
 
 
 export type MutationImportStudentsAndParentsArgs = {
   input: ImportStudentsAndParentsInput;
-  schoolId: Scalars['ID'];
+  schoolId: Scalars['ID']['input'];
 };
 
 
@@ -251,12 +306,17 @@ export type MutationRegisterWithEmailArgs = {
 
 
 export type MutationRemoveAddressArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
+};
+
+
+export type MutationRemoveCategoryArgs = {
+  id: Scalars['ID']['input'];
 };
 
 
 export type MutationRemoveImageArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 };
 
 
@@ -266,12 +326,17 @@ export type MutationRemoveSocialArgs = {
 
 
 export type MutationRemoveUserRoleArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
+};
+
+
+export type MutationRequestAccountArgs = {
+  input: RequestAccountInput;
 };
 
 
 export type MutationResendUserRoleInviteArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 };
 
 
@@ -281,10 +346,10 @@ export type MutationResetPasswordArgs = {
 
 
 export type MutationRespondToInvitedRoleArgs = {
-  accept: Scalars['Boolean'];
-  name?: InputMaybe<Scalars['String']>;
-  password?: InputMaybe<Scalars['String']>;
-  token: Scalars['String'];
+  accept: Scalars['Boolean']['input'];
+  name?: InputMaybe<Scalars['String']['input']>;
+  password?: InputMaybe<Scalars['String']['input']>;
+  token: Scalars['String']['input'];
 };
 
 
@@ -294,8 +359,14 @@ export type MutationSimulateNewFlaggedPostArgs = {
 
 
 export type MutationUpdateAddressArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: UpdateAddressInput;
+};
+
+
+export type MutationUpdateCategoryArgs = {
+  id: Scalars['ID']['input'];
+  input: UpdateCategoryInput;
 };
 
 
@@ -315,7 +386,7 @@ export type MutationUpdatePasswordArgs = {
 
 
 export type MutationUpdateSchoolArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: UpdateSchoolInput;
 };
 
@@ -326,38 +397,34 @@ export type MutationUpdateSettingsArgs = {
 
 
 export type MutationUpdateShareDataWithSchoolArgs = {
-  id: Scalars['ID'];
-  value: Scalars['Boolean'];
+  id: Scalars['ID']['input'];
+  value: Scalars['Boolean']['input'];
 };
 
 
 export type MutationUpdateUserArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   input: UpdateUserInput;
 };
 
 
 export type MutationUpdateUserParentalApprovalArgs = {
-  approve: Scalars['Boolean'];
-  id: Scalars['ID'];
-  signatureUploadId?: InputMaybe<Scalars['ID']>;
+  approve: Scalars['Boolean']['input'];
+  id: Scalars['ID']['input'];
+  signatureUploadId?: InputMaybe<Scalars['ID']['input']>;
 };
 
 
 export type MutationValidatePhoneNumberArgs = {
-  token: Scalars['String'];
+  token: Scalars['String']['input'];
 };
-
-export type MutationRequestAccountArgs = {
-  input: RequestAccountInput;
-}
 
 export type Notification = {
   __typename?: 'Notification';
-  body: Scalars['String'];
-  createdAt: Scalars['DateTime'];
-  id: Scalars['ID'];
-  url?: Maybe<Scalars['String']>;
+  body: Scalars['String']['output'];
+  createdAt: Scalars['DateTime']['output'];
+  id: Scalars['ID']['output'];
+  url?: Maybe<Scalars['String']['output']>;
 };
 
 export type NotificationPage = {
@@ -368,12 +435,12 @@ export type NotificationPage = {
 
 export type NotificationSettings = {
   __typename?: 'NotificationSettings';
-  receivePostHighSeverityEmail: Scalars['Boolean'];
-  receivePostHighSeveritySMS: Scalars['Boolean'];
-  receivePostLowSeverityEmail: Scalars['Boolean'];
-  receivePostLowSeveritySMS: Scalars['Boolean'];
-  receivePostNoneSeverityEmail: Scalars['Boolean'];
-  receivePostNoneSeveritySMS: Scalars['Boolean'];
+  receivePostHighSeverityEmail: Scalars['Boolean']['output'];
+  receivePostHighSeveritySMS: Scalars['Boolean']['output'];
+  receivePostLowSeverityEmail: Scalars['Boolean']['output'];
+  receivePostLowSeveritySMS: Scalars['Boolean']['output'];
+  receivePostNoneSeverityEmail: Scalars['Boolean']['output'];
+  receivePostNoneSeveritySMS: Scalars['Boolean']['output'];
 };
 
 export const OrderDirectionEnum = {
@@ -384,21 +451,21 @@ export const OrderDirectionEnum = {
 export type OrderDirectionEnum = typeof OrderDirectionEnum[keyof typeof OrderDirectionEnum];
 export type Page = {
   __typename?: 'Page';
-  count: Scalars['Int'];
-  index: Scalars['Int'];
-  size: Scalars['Int'];
-  total: Scalars['Int'];
+  count: Scalars['Int']['output'];
+  index: Scalars['Int']['output'];
+  size: Scalars['Int']['output'];
+  total: Scalars['Int']['output'];
 };
 
 export type PageInput = {
-  index?: InputMaybe<Scalars['Int']>;
-  size?: InputMaybe<Scalars['Int']>;
+  index?: InputMaybe<Scalars['Int']['input']>;
+  size?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type ParentRole = {
   __typename?: 'ParentRole';
   childUser: User;
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
   status: UserRoleStatusEnum;
   type: UserRoleTypeEnum;
 };
@@ -406,17 +473,17 @@ export type ParentRole = {
 export type Post = {
   __typename?: 'Post';
   actions: Array<Action>;
-  createdAt: Scalars['DateTime'];
+  createdAt: Scalars['DateTime']['output'];
   flag?: Maybe<Flag>;
-  id: Scalars['ID'];
-  latestAction?: Maybe<Scalars['String']>;
-  manualReview: Scalars['Boolean'];
+  id: Scalars['ID']['output'];
+  latestAction?: Maybe<Scalars['String']['output']>;
+  manualReview: Scalars['Boolean']['output'];
   media: Array<Media>;
   platform?: Maybe<SocialNameEnum>;
   schools: Array<School>;
   severity: AnalysisItemSeverityEnum;
-  text: Scalars['String'];
-  url: Scalars['String'];
+  text: Scalars['String']['output'];
+  url: Scalars['String']['output'];
   user: User;
 };
 
@@ -432,18 +499,18 @@ export type PostPage = {
 
 export type PreviewImport = {
   __typename?: 'PreviewImport';
-  headers: Array<Scalars['String']>;
+  headers: Array<Scalars['String']['output']>;
   rows: Array<PreviewImportRow>;
 };
 
 export type PreviewImportInput = {
   type: PreviewImportTypeEnum;
-  uploadId: Scalars['ID'];
+  uploadId: Scalars['ID']['input'];
 };
 
 export type PreviewImportRow = {
   __typename?: 'PreviewImportRow';
-  values: Array<Scalars['String']>;
+  values: Array<Scalars['String']['output']>;
 };
 
 export const PreviewImportTypeEnum = {
@@ -454,11 +521,14 @@ export const PreviewImportTypeEnum = {
 export type PreviewImportTypeEnum = typeof PreviewImportTypeEnum[keyof typeof PreviewImportTypeEnum];
 export type Query = {
   __typename?: 'Query';
+  categories: Array<Category>;
+  rooms: Array<Room>;
   invitedRole: InvitedRole;
   notificationSettings: NotificationSettings;
   notifications: NotificationPage;
   post: Post;
   posts: PostPage;
+  resources: ResourcePage;
   school: School;
   schools: SchoolPage;
   settings: Settings;
@@ -469,14 +539,14 @@ export type Query = {
   statsOfCreatedSchools: StatsByDay;
   statsOfCreatedUsers: StatsByDay;
   statsOfInvitedMembersInSchool: StatsByDay;
-  statsOfSocialsConnected: Scalars['Int'];
+  statsOfSocialsConnected: Scalars['Int']['output'];
   user: User;
   users: UserPage;
 };
 
 
 export type QueryInvitedRoleArgs = {
-  token: Scalars['String'];
+  token: Scalars['String']['input'];
 };
 
 
@@ -486,21 +556,28 @@ export type QueryNotificationsArgs = {
 
 
 export type QueryPostArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 };
 
 
 export type QueryPostsArgs = {
   filter?: InputMaybe<PostFilter>;
   page?: InputMaybe<PageInput>;
-  parentId?: InputMaybe<Scalars['ID']>;
-  schoolId?: InputMaybe<Scalars['ID']>;
-  userId?: InputMaybe<Scalars['ID']>;
+  parentId?: InputMaybe<Scalars['ID']['input']>;
+  schoolId?: InputMaybe<Scalars['ID']['input']>;
+  userId?: InputMaybe<Scalars['ID']['input']>;
+};
+
+
+export type QueryResourcesArgs = {
+  filter?: InputMaybe<ResourceFilter>;
+  order?: InputMaybe<ResourceOrder>;
+  page?: InputMaybe<PageInput>;
 };
 
 
 export type QuerySchoolArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 };
 
 
@@ -512,50 +589,50 @@ export type QuerySchoolsArgs = {
 
 
 export type QueryStatsOfAcceptedMembersInSchoolArgs = {
-  days?: Scalars['Int'];
-  schoolId: Scalars['ID'];
+  days?: Scalars['Int']['input'];
+  schoolId: Scalars['ID']['input'];
 };
 
 
 export type QueryStatsOfCreatedMembersArgs = {
-  days?: Scalars['Int'];
+  days?: Scalars['Int']['input'];
 };
 
 
 export type QueryStatsOfCreatedMembersInSchoolArgs = {
-  days?: Scalars['Int'];
-  schoolId: Scalars['ID'];
+  days?: Scalars['Int']['input'];
+  schoolId: Scalars['ID']['input'];
 };
 
 
 export type QueryStatsOfCreatedParentsArgs = {
-  days?: Scalars['Int'];
+  days?: Scalars['Int']['input'];
 };
 
 
 export type QueryStatsOfCreatedSchoolsArgs = {
-  days?: Scalars['Int'];
+  days?: Scalars['Int']['input'];
 };
 
 
 export type QueryStatsOfCreatedUsersArgs = {
-  days?: Scalars['Int'];
+  days?: Scalars['Int']['input'];
 };
 
 
 export type QueryStatsOfInvitedMembersInSchoolArgs = {
-  days?: Scalars['Int'];
-  schoolId: Scalars['ID'];
+  days?: Scalars['Int']['input'];
+  schoolId: Scalars['ID']['input'];
 };
 
 
 export type QueryStatsOfSocialsConnectedArgs = {
-  schoolId: Scalars['ID'];
+  schoolId: Scalars['ID']['input'];
 };
 
 
 export type QueryUserArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 };
 
 
@@ -566,26 +643,69 @@ export type QueryUsersArgs = {
 };
 
 export type RegisterWithEmailInput = {
-  email: Scalars['String'];
-  name: Scalars['String'];
-  password: Scalars['String'];
+  email: Scalars['String']['input'];
+  name: Scalars['String']['input'];
+  password: Scalars['String']['input'];
+};
+
+export type RequestAccountInput = {
+  comments?: InputMaybe<Scalars['String']['input']>;
+  email: Scalars['String']['input'];
+  firstName: Scalars['String']['input'];
+  jobTitle?: InputMaybe<Scalars['String']['input']>;
+  lastName: Scalars['String']['input'];
+  phone?: InputMaybe<Scalars['String']['input']>;
+  reason: Array<Scalars['String']['input']>;
+  role: Array<Scalars['String']['input']>;
+  schoolName: Scalars['String']['input'];
+  schoolType: Scalars['String']['input'];
+  state: Scalars['String']['input'];
+  students: Scalars['Int']['input'];
 };
 
 export type ResetPasswordInput = {
-  password: Scalars['String'];
-  token: Scalars['String'];
+  password: Scalars['String']['input'];
+  token: Scalars['String']['input'];
+};
+
+export type Resource = {
+  __typename?: 'Resource';
+  category: Category;
+  createdAt: Scalars['DateTime']['output'];
+  id: Scalars['ID']['output'];
+  subTitle: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+  url: Scalars['String']['output'];
+  user: User;
+};
+
+export type ResourceFilter = {
+  search?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ResourceOrder = {
+  createdAt?: InputMaybe<OrderDirectionEnum>;
+  subTitle?: InputMaybe<OrderDirectionEnum>;
+  title?: InputMaybe<OrderDirectionEnum>;
+  url?: InputMaybe<OrderDirectionEnum>;
+};
+
+export type ResourcePage = {
+  __typename?: 'ResourcePage';
+  nodes: Array<Resource>;
+  page: Page;
 };
 
 export type School = {
   __typename?: 'School';
   address?: Maybe<Address>;
   cover?: Maybe<Image>;
-  createdAt: Scalars['DateTime'];
-  id: Scalars['ID'];
+  createdAt: Scalars['DateTime']['output'];
+  id: Scalars['ID']['output'];
   logo?: Maybe<Image>;
-  memberCount: Scalars['Int'];
-  name: Scalars['String'];
-  phone?: Maybe<Scalars['String']>;
+  memberCount: Scalars['Int']['output'];
+  name: Scalars['String']['output'];
+  phone?: Maybe<Scalars['String']['output']>;
 };
 
 
@@ -594,7 +714,7 @@ export type SchoolMemberCountArgs = {
 };
 
 export type SchoolFilter = {
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type SchoolOrder = {
@@ -613,7 +733,7 @@ export type SchoolPage = {
 
 export type SchoolRole = {
   __typename?: 'SchoolRole';
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
   school: School;
   status: UserRoleStatusEnum;
   type: UserRoleTypeEnum;
@@ -628,12 +748,12 @@ export const SchoolRoleTypeEnum = {
 export type SchoolRoleTypeEnum = typeof SchoolRoleTypeEnum[keyof typeof SchoolRoleTypeEnum];
 export type Settings = {
   __typename?: 'Settings';
-  enableSignUps: Scalars['Boolean'];
+  enableSignUps: Scalars['Boolean']['output'];
 };
 
 export type SimulateNewFlaggedPostInput = {
-  severe: Scalars['Boolean'];
-  userId: Scalars['ID'];
+  severe: Scalars['Boolean']['input'];
+  userId: Scalars['ID']['input'];
 };
 
 export type Social = Facebook | Instagram | TikTok | Twitter;
@@ -648,42 +768,46 @@ export const SocialNameEnum = {
 export type SocialNameEnum = typeof SocialNameEnum[keyof typeof SocialNameEnum];
 export type StatByDay = {
   __typename?: 'StatByDay';
-  day: Scalars['String'];
-  value: Scalars['Int'];
+  day: Scalars['String']['output'];
+  value: Scalars['Int']['output'];
 };
 
 export type StatsByDay = {
   __typename?: 'StatsByDay';
   stats: Array<StatByDay>;
-  total: Scalars['Int'];
+  total: Scalars['Int']['output'];
 };
 
 export type TikTok = {
   __typename?: 'TikTok';
-  id: Scalars['ID'];
-  username: Scalars['String'];
+  id: Scalars['ID']['output'];
+  username: Scalars['String']['output'];
 };
 
 export type Twitter = {
   __typename?: 'Twitter';
-  id: Scalars['ID'];
-  username: Scalars['String'];
+  id: Scalars['ID']['output'];
+  username: Scalars['String']['output'];
 };
 
 export type UpdateAddressInput = {
-  city?: InputMaybe<Scalars['String']>;
-  state?: InputMaybe<Scalars['String']>;
-  street?: InputMaybe<Scalars['String']>;
-  zip?: InputMaybe<Scalars['String']>;
+  city?: InputMaybe<Scalars['String']['input']>;
+  state?: InputMaybe<Scalars['String']['input']>;
+  street?: InputMaybe<Scalars['String']['input']>;
+  zip?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type UpdateCategoryInput = {
+  name?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type UpdateEmailSettingsInput = {
-  receivePostHighSeverityEmail?: InputMaybe<Scalars['Boolean']>;
-  receivePostHighSeveritySMS?: InputMaybe<Scalars['Boolean']>;
-  receivePostLowSeverityEmail?: InputMaybe<Scalars['Boolean']>;
-  receivePostLowSeveritySMS?: InputMaybe<Scalars['Boolean']>;
-  receivePostNoneSeverityEmail?: InputMaybe<Scalars['Boolean']>;
-  receivePostNoneSeveritySMS?: InputMaybe<Scalars['Boolean']>;
+  receivePostHighSeverityEmail?: InputMaybe<Scalars['Boolean']['input']>;
+  receivePostHighSeveritySMS?: InputMaybe<Scalars['Boolean']['input']>;
+  receivePostLowSeverityEmail?: InputMaybe<Scalars['Boolean']['input']>;
+  receivePostLowSeveritySMS?: InputMaybe<Scalars['Boolean']['input']>;
+  receivePostNoneSeverityEmail?: InputMaybe<Scalars['Boolean']['input']>;
+  receivePostNoneSeveritySMS?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export const UpdateImageForEnum = {
@@ -695,69 +819,54 @@ export const UpdateImageForEnum = {
 export type UpdateImageForEnum = typeof UpdateImageForEnum[keyof typeof UpdateImageForEnum];
 export type UpdateImageInput = {
   for: UpdateImageForEnum;
-  forId: Scalars['ID'];
-  uploadId: Scalars['ID'];
+  forId: Scalars['ID']['input'];
+  uploadId: Scalars['ID']['input'];
 };
 
 export type UpdatePasswordInput = {
-  newPassword: Scalars['String'];
-  oldPassword: Scalars['String'];
+  newPassword: Scalars['String']['input'];
+  oldPassword: Scalars['String']['input'];
 };
 
 export type UpdateSchoolInput = {
-  cover?: InputMaybe<Scalars['String']>;
-  logo?: InputMaybe<Scalars['String']>;
-  name?: InputMaybe<Scalars['String']>;
-  phone?: InputMaybe<Scalars['String']>;
+  cover?: InputMaybe<Scalars['String']['input']>;
+  logo?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  phone?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type UpdateSettingsInput = {
-  enableSignUps?: InputMaybe<Scalars['Boolean']>;
+  enableSignUps?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type UpdateUserInput = {
-  name?: InputMaybe<Scalars['String']>;
-  newEmail?: InputMaybe<Scalars['String']>;
-  newPhoneNumber?: InputMaybe<Scalars['String']>;
-};
-
-export type RequestAccountInput = {
-  reason: Array<string>;
-  role: Array<string>;
-  firstName: InputMaybe<Scalars['String']>,
-  lastName: InputMaybe<Scalars['String']>,
-  jobTitle?: InputMaybe<Scalars['String']>,
-  email: InputMaybe<Scalars['String']>,
-  phone?: InputMaybe<Scalars['String']>,
-  schoolName: InputMaybe<Scalars['String']>,
-  state: InputMaybe<Scalars['String']>,
-  students: InputMaybe<Scalars['Int']>,
-  schoolType: InputMaybe<Scalars['String']>,
-  comments?: InputMaybe<Scalars['String']>,
+  name?: InputMaybe<Scalars['String']['input']>;
+  newEmail?: InputMaybe<Scalars['String']['input']>;
+  newPhoneNumber?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type Upload = {
   __typename?: 'Upload';
   headers: Array<Header>;
-  id: Scalars['ID'];
-  method: Scalars['String'];
-  url: Scalars['String'];
+  id: Scalars['ID']['output'];
+  method: Scalars['String']['output'];
+  url: Scalars['String']['output'];
 };
 
 export type User = {
   __typename?: 'User';
   avatar?: Maybe<Image>;
-  createdAt: Scalars['DateTime'];
-  email: Scalars['String'];
-  id: Scalars['ID'];
-  name: Scalars['String'];
-  notificationCount: Scalars['Int'];
-  parentalApproval?: Maybe<Scalars['Boolean']>;
-  phoneNumber?: Maybe<Scalars['String']>;
+  createdAt: Scalars['DateTime']['output'];
+  email: Scalars['String']['output'];
+  id: Scalars['ID']['output'];
+  name: Scalars['String']['output'];
+  notificationCount: Scalars['Int']['output'];
+  parentalApproval?: Maybe<Scalars['Boolean']['output']>;
+  phoneNumber?: Maybe<Scalars['String']['output']>;
   platforms: Array<Social>;
   roles: Array<UserRole>;
-  score: Scalars['Float'];
-  shareDataWithSchool: Scalars['Boolean'];
+  score: Scalars['Float']['output'];
+  shareDataWithSchool: Scalars['Boolean']['output'];
 };
 
 
@@ -767,9 +876,9 @@ export type UserRolesArgs = {
 
 export type UserFilter = {
   from?: InputMaybe<UsersFromEnum>;
-  fromId?: InputMaybe<Scalars['ID']>;
+  fromId?: InputMaybe<Scalars['ID']['input']>;
   roles?: InputMaybe<Array<UserRoleTypeEnum>>;
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type UserOrder = {
@@ -805,7 +914,7 @@ export const UserRoleTypeEnum = {
 export type UserRoleTypeEnum = typeof UserRoleTypeEnum[keyof typeof UserRoleTypeEnum];
 export type UserWithToken = {
   __typename?: 'UserWithToken';
-  token: Scalars['String'];
+  token: Scalars['String']['output'];
   user: User;
 };
 
@@ -1155,6 +1264,9 @@ export type SimulateNewFlaggedPostMutationVariables = Exact<{
   input: SimulateNewFlaggedPostInput;
 }>;
 
+
+export type SimulateNewFlaggedPostMutation = { __typename?: 'Mutation', simulateNewFlaggedPost: boolean };
+
 export type RequestAccountMutationVariables = Exact<{
   input: RequestAccountInput;
 }>;
@@ -1162,8 +1274,33 @@ export type RequestAccountMutationVariables = Exact<{
 
 export type RequestAccountMutation = { __typename?: 'Mutation', requestAccount: boolean };
 
+export type ResourcesQueryVariables = Exact<{
+  page?: InputMaybe<PageInput>;
+  order?: InputMaybe<ResourceOrder>;
+  filter?: InputMaybe<ResourceFilter>;
+}>;
 
-export type SimulateNewFlaggedPostMutation = { __typename?: 'Mutation', simulateNewFlaggedPost: boolean };
+
+export type ResourcesQuery = { __typename?: 'Query', resources: { __typename?: 'ResourcePage', page: { __typename?: 'Page', index: number, size: number, count: number, total: number }, nodes: Array<{ __typename?: 'Resource', id: string, title: string, subTitle: string, url: string, createdAt: string, user: { __typename?: 'User', name: string, avatar?: { __typename?: 'Image', url: string } | null }, category: { __typename?: 'Category', name: string } }> } };
+
+export type CreateResourceMutationVariables = Exact<{
+  input: CreateResourceInput;
+}>;
+
+
+export type CreateResourceMutation = { __typename?: 'Mutation', createResource: { __typename?: 'Resource', id: string } };
+
+export type CategoriesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CategoriesQuery = { __typename?: 'Query', categories: Array<{ __typename?: 'Category', id: string, name: string }> };
+
+export type CreateCategoryMutationVariables = Exact<{
+  input: CreateCategoryInput;
+}>;
+
+
+export type CreateCategoryMutation = { __typename?: 'Mutation', createCategory: { __typename?: 'Category', id: string } };
 
 export const SocialFragmentFragmentDoc = gql`
     fragment SocialFragment on Social {
@@ -2957,39 +3094,6 @@ export function useRespondToInvitedRoleMutation(baseOptions?: Apollo.MutationHoo
 export type RespondToInvitedRoleMutationHookResult = ReturnType<typeof useRespondToInvitedRoleMutation>;
 export type RespondToInvitedRoleMutationResult = Apollo.MutationResult<RespondToInvitedRoleMutation>;
 export type RespondToInvitedRoleMutationOptions = Apollo.BaseMutationOptions<RespondToInvitedRoleMutation, RespondToInvitedRoleMutationVariables>;
-
-export const RequestAccountDocument = gql`
-    mutation RequestAccount($input: RequestAccountInput!) {
-  requestAccount(input: $input)
-}
-    `;
-export type RequestAccountMutationFn = Apollo.MutationFunction<RequestAccountMutation, RequestAccountMutationVariables>;
-
-/**
- * __useRequestAccountMutation__
- *
- * To run a mutation, you first call `useRequestAccountMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useRequestAccountMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [requestAccountMutation, { data, loading, error }] = useRequestAccountMutation({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useRequestAccountMutation(baseOptions?: Apollo.MutationHookOptions<RequestAccountMutation, RequestAccountMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<RequestAccountMutation, RequestAccountMutationVariables>(RequestAccountDocument, options);
-      }
-export type RequestAccountMutationHookResult = ReturnType<typeof useRequestAccountMutation>;
-export type RequestAccountMutationResult = Apollo.MutationResult<RequestAccountMutation>;
-export type RequestAccountMutationOptions = Apollo.BaseMutationOptions<RequestAccountMutation, RequestAccountMutationVariables>;
-
 export const SimulateNewFlaggedPostDocument = gql`
     mutation simulateNewFlaggedPost($input: SimulateNewFlaggedPostInput!) {
   simulateNewFlaggedPost(input: $input)
@@ -3021,6 +3125,193 @@ export function useSimulateNewFlaggedPostMutation(baseOptions?: Apollo.MutationH
 export type SimulateNewFlaggedPostMutationHookResult = ReturnType<typeof useSimulateNewFlaggedPostMutation>;
 export type SimulateNewFlaggedPostMutationResult = Apollo.MutationResult<SimulateNewFlaggedPostMutation>;
 export type SimulateNewFlaggedPostMutationOptions = Apollo.BaseMutationOptions<SimulateNewFlaggedPostMutation, SimulateNewFlaggedPostMutationVariables>;
+export const RequestAccountDocument = gql`
+    mutation requestAccount($input: RequestAccountInput!) {
+  requestAccount(input: $input)
+}
+    `;
+export type RequestAccountMutationFn = Apollo.MutationFunction<RequestAccountMutation, RequestAccountMutationVariables>;
+
+/**
+ * __useRequestAccountMutation__
+ *
+ * To run a mutation, you first call `useRequestAccountMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRequestAccountMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [requestAccountMutation, { data, loading, error }] = useRequestAccountMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useRequestAccountMutation(baseOptions?: Apollo.MutationHookOptions<RequestAccountMutation, RequestAccountMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<RequestAccountMutation, RequestAccountMutationVariables>(RequestAccountDocument, options);
+      }
+export type RequestAccountMutationHookResult = ReturnType<typeof useRequestAccountMutation>;
+export type RequestAccountMutationResult = Apollo.MutationResult<RequestAccountMutation>;
+export type RequestAccountMutationOptions = Apollo.BaseMutationOptions<RequestAccountMutation, RequestAccountMutationVariables>;
+export const ResourcesDocument = gql`
+    query resources($page: PageInput, $order: ResourceOrder, $filter: ResourceFilter) {
+  resources(page: $page, order: $order, filter: $filter) {
+    page {
+      ...PageFragment
+    }
+    nodes {
+      id
+      title
+      subTitle
+      url
+      createdAt
+      user {
+        name
+        avatar {
+          url
+        }
+      }
+      category {
+        name
+      }
+    }
+  }
+}
+    ${PageFragmentFragmentDoc}`;
+
+/**
+ * __useResourcesQuery__
+ *
+ * To run a query within a React component, call `useResourcesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useResourcesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useResourcesQuery({
+ *   variables: {
+ *      page: // value for 'page'
+ *      order: // value for 'order'
+ *      filter: // value for 'filter'
+ *   },
+ * });
+ */
+export function useResourcesQuery(baseOptions?: Apollo.QueryHookOptions<ResourcesQuery, ResourcesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ResourcesQuery, ResourcesQueryVariables>(ResourcesDocument, options);
+      }
+export function useResourcesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ResourcesQuery, ResourcesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ResourcesQuery, ResourcesQueryVariables>(ResourcesDocument, options);
+        }
+export type ResourcesQueryHookResult = ReturnType<typeof useResourcesQuery>;
+export type ResourcesLazyQueryHookResult = ReturnType<typeof useResourcesLazyQuery>;
+export type ResourcesQueryResult = Apollo.QueryResult<ResourcesQuery, ResourcesQueryVariables>;
+export const CreateResourceDocument = gql`
+    mutation createResource($input: CreateResourceInput!) {
+  createResource(input: $input) {
+    id
+  }
+}
+    `;
+export type CreateResourceMutationFn = Apollo.MutationFunction<CreateResourceMutation, CreateResourceMutationVariables>;
+
+/**
+ * __useCreateResourceMutation__
+ *
+ * To run a mutation, you first call `useCreateResourceMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateResourceMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createResourceMutation, { data, loading, error }] = useCreateResourceMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateResourceMutation(baseOptions?: Apollo.MutationHookOptions<CreateResourceMutation, CreateResourceMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateResourceMutation, CreateResourceMutationVariables>(CreateResourceDocument, options);
+      }
+export type CreateResourceMutationHookResult = ReturnType<typeof useCreateResourceMutation>;
+export type CreateResourceMutationResult = Apollo.MutationResult<CreateResourceMutation>;
+export type CreateResourceMutationOptions = Apollo.BaseMutationOptions<CreateResourceMutation, CreateResourceMutationVariables>;
+export const CategoriesDocument = gql`
+    query categories {
+  categories {
+    id
+    name
+  }
+}
+    `;
+
+/**
+ * __useCategoriesQuery__
+ *
+ * To run a query within a React component, call `useCategoriesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCategoriesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCategoriesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useCategoriesQuery(baseOptions?: Apollo.QueryHookOptions<CategoriesQuery, CategoriesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CategoriesQuery, CategoriesQueryVariables>(CategoriesDocument, options);
+      }
+export function useCategoriesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CategoriesQuery, CategoriesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CategoriesQuery, CategoriesQueryVariables>(CategoriesDocument, options);
+        }
+export type CategoriesQueryHookResult = ReturnType<typeof useCategoriesQuery>;
+export type CategoriesLazyQueryHookResult = ReturnType<typeof useCategoriesLazyQuery>;
+export type CategoriesQueryResult = Apollo.QueryResult<CategoriesQuery, CategoriesQueryVariables>;
+export const CreateCategoryDocument = gql`
+    mutation createCategory($input: CreateCategoryInput!) {
+  createCategory(input: $input) {
+    id
+  }
+}
+    `;
+export type CreateCategoryMutationFn = Apollo.MutationFunction<CreateCategoryMutation, CreateCategoryMutationVariables>;
+
+/**
+ * __useCreateCategoryMutation__
+ *
+ * To run a mutation, you first call `useCreateCategoryMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateCategoryMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createCategoryMutation, { data, loading, error }] = useCreateCategoryMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateCategoryMutation(baseOptions?: Apollo.MutationHookOptions<CreateCategoryMutation, CreateCategoryMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateCategoryMutation, CreateCategoryMutationVariables>(CreateCategoryDocument, options);
+      }
+export type CreateCategoryMutationHookResult = ReturnType<typeof useCreateCategoryMutation>;
+export type CreateCategoryMutationResult = Apollo.MutationResult<CreateCategoryMutation>;
+export type CreateCategoryMutationOptions = Apollo.BaseMutationOptions<CreateCategoryMutation, CreateCategoryMutationVariables>;
 export const namedOperations = {
   Query: {
     notifications: 'notifications',
@@ -3036,7 +3327,9 @@ export const namedOperations = {
     posts: 'posts',
     post: 'post',
     postCards: 'postCards',
-    invitedRole: 'invitedRole'
+    invitedRole: 'invitedRole',
+    resources: 'resources',
+    categories: 'categories'
   },
   Mutation: {
     readNotifications: 'readNotifications',
@@ -3069,7 +3362,10 @@ export const namedOperations = {
     previewImport: 'previewImport',
     importStudentsAndParents: 'importStudentsAndParents',
     respondToInvitedRole: 'respondToInvitedRole',
-    simulateNewFlaggedPost: 'simulateNewFlaggedPost'
+    simulateNewFlaggedPost: 'simulateNewFlaggedPost',
+    requestAccount: 'requestAccount',
+    createResource: 'createResource',
+    createCategory: 'createCategory'
   },
   Fragment: {
     SocialFragment: 'SocialFragment',

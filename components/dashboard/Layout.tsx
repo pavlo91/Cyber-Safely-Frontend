@@ -6,6 +6,7 @@ import HomeIcon from '@mui/icons-material/HomeOutlined'
 import ArrowDownIcon from '@mui/icons-material/KeyboardArrowDownOutlined'
 import ArrowUpIcon from '@mui/icons-material/KeyboardArrowUpOutlined'
 import LinkIcon from '@mui/icons-material/LinkOutlined'
+import BackupOutlinedIcon from '@mui/icons-material/BackupOutlined'
 import LogoutIcon from '@mui/icons-material/LogoutOutlined'
 import MenuIcon from '@mui/icons-material/MenuOutlined'
 import NotificationIcon from '@mui/icons-material/NotificationsOutlined'
@@ -384,6 +385,7 @@ function Sidebar() {
             <SidebarLink href="/dashboard/staff/users" icon={<PersonIcon />} title="Users" />
             <SidebarLink href="/dashboard/staff/schools" icon={<SchoolIcon />} title="Schools" />
             <SidebarLink href="/dashboard/staff/posts" icon={<FeedIcon />} title="Posts" />
+            <SidebarLink href="/dashboard/staff/resources" icon={<BackupOutlinedIcon />} title="Resources" />
             <SidebarLink href="/dashboard/staff/settings" icon={<SettingsIcon />} title="Settings" />
           </CollapsableList>
         </>

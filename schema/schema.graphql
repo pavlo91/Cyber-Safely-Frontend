@@ -545,3 +545,61 @@ mutation simulateNewFlaggedPost($input: SimulateNewFlaggedPostInput!) {
 mutation requestAccount($input: RequestAccountInput!) {
   requestAccount(input: $input)
 }
+
+query resources($page: PageInput, $order: ResourceOrder, $filter: ResourceFilter) {
+  resources(page: $page, order: $order, filter: $filter) {
+    page {
+      ...PageFragment
+    }
+    nodes {
+      id
+      title
+      subTitle
+      url
+      createdAt
+      user {
+        name
+        avatar {
+          url
+        }
+      }
+      category {
+        name
+      }
+    }
+  }
+}
+
+mutation createResource($input: CreateResourceInput!) {
+  createResource(input: $input) {
+    id
+  }
+}
+
+query categories {
+  categories {
+    id
+    name
+  }
+}
+
+mutation createCategory($input: CreateCategoryInput!) {
+  createCategory(input: $input) {
+    id
+  }
+}
+
+query rooms {
+  rooms {
+    id
+    name
+    capacity
+    createdAt
+  }
+}
+
+mutation createRoom($input: CreateRoomInput!) {
+  createRoom(input: $input) {
+    id
+  }
+}

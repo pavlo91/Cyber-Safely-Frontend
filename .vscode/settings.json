@@ -20,5 +20,10 @@
   "[prisma]": {
     "editor.formatOnSave": true,
     "editor.defaultFormatter": "Prisma.prisma"
+  },
+  "[typescript][typescriptreact]": {
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "explicit"
+    }
   }
 }
