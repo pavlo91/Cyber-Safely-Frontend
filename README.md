@@ -3,7 +3,7 @@
 ![Landing page](./landing-page.png?raw=true "Landing")
 ![Register page](./register-page.png?raw=true "Register")
 ![Resource page](./resource-page.png?raw=true "Resource")
-![School page](./schools-page.png?raw=true "School")
+![School page](./schools.png?raw=true "School")
 ![Staff page](./staff-page.png?raw=true "Staff")
 
 <div align="center">
