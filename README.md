@@ -1,6 +1,18 @@
-# CyberSafely
+## Screenshot
+![Dashboard page](./dashboard-page.png?raw=true "Home")
+![Landing page](./landing-page.png?raw=true "Landing")
+![Register page](./register-page.png?raw=true "Register")
+![Resource page](./resource-page.png?raw=true "Resource")
+![School page](./schools-page.png?raw=true "School")
+![Staff page](./staff-page.png?raw=true "Staff")
 
-![Logo](.github/logo-black.png)
+<div align="center">
+  <h1 align="center"!>CyberSafely</h1>
+  <p align="center">
+    Next.js, Typescript, Apollo, Material UI, TailWind CSS, BootStrap5, Prisma, PostgreSQL, GraphQL, AI, React, Next-Router, Redux, Context, Socket Project
+  </p>
+  <br>
+</div>
 
 ## Running
 
